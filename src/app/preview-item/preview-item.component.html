@@ -1,0 +1,8 @@
+<div class="col-12 offset-6" *ngIf="item.sold">
+  <mat-list>
+    <mat-list-item class="list-group-item">Price Sold: {{item.priceSold | currency:'USD'}}</mat-list-item>
+    <mat-list-item class="list-group-item">Marketplace (rate): {{item.marketplace}} {{rate}}</mat-list-item>
+    <mat-list-item class="list-group-item">Price Purchased: {{item.pricePurchased | currency:'USD'}}</mat-list-item>
+    <!-- TODO: IMPLEMENT PROFIT <mat-list-item class="list-group-item">Profit: {{profit | currency:'USD'}}</mat-list-item>  -->
+  </mat-list>
+</div>

@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="submit-item col-6">
+    <form class="example-form">
+      <h1>Add Item</h1>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Merchant" [(ngModel)]="item.merchant" name="merchant">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Item Name" [(ngModel)]="item.itemName" name="itemName">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Price Purchased" [(ngModel)]="item.pricePurchased" name="pricePurchased">
+      </mat-form-field>
+      <mat-checkbox [(ngModel)]="item.sold" name="sold">Sold?</mat-checkbox>
+
+      <mat-form-field *ngIf="item.sold" class="example-full-width">
+        <mat-select placeholder="Marketplace" [(ngModel)]="item.marketplace" name="marketplace">
+          <mat-option *ngFor="let option of item.marketOptions" [value]="option.value">
+            {{option.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" *ngIf="item.marketplace === 'Other'">
+        <input matInput placeholder="Rate" [(ngModel)]="item.rate" name="rate">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" *ngIf="item.sold">
+        <input matInput placeholder="Price Sold" [(ngModel)]="item.priceSold" name="priceSold">
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="d-block" (click)="submitItem(item)">Submit</button>
+    </form>
+  </div>
+  <app-preview-item [item]="item"></app-preview-item>
+</div>
