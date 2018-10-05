@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Item } from './item.model';
 import { ItemService } from '../item.service';
 
@@ -8,7 +8,8 @@ import { ItemService } from '../item.service';
   styleUrls: ['./submit-item.component.css']
 })
 export class SubmitItemComponent implements OnInit {
-  item: Item = new Item('', '', 0, false, '', 0);
+  item: Item = new Item('', '', 0, false, '', 1, 0, 0);
+  @Output() marketSelected = new EventEmitter<string>();
 
   constructor(private itemService: ItemService) {}
 
@@ -20,21 +21,75 @@ export class SubmitItemComponent implements OnInit {
     const pricePurchased = this.item.pricePurchased;
     const sold = this.item.sold;
     const marketplace = this.item.marketplace;
+    const rate = this.item.rate;
     const priceSold = this.item.priceSold;
+    const profit = this.item.profit;
     const newItem = new Item(
       merchant,
       itemName,
       pricePurchased,
       sold,
       marketplace,
-      priceSold
+      rate,
+      priceSold,
+      profit
     );
     this.itemService.submitItem(newItem);
+    this.resetItem();
+  }
+
+  resetItem() {
     this.item.merchant = '';
     this.item.itemName = '';
     this.item.pricePurchased = 0;
     this.item.sold = false;
     this.item.marketplace = '';
+    this.item.rate = 1;
     this.item.priceSold = 0;
+    this.item.profit = 0;
   }
+
+  onMarketOptionSelected() {
+    switch (this.item.marketplace) {
+      case 'eBay':
+        this.item.rate = 0.1;
+        this.applyFees();
+        break;
+      case 'Grailed':
+        this.item.rate = 0.06;
+        this.applyFees();
+        break;
+      case 'StockX':
+        this.item.rate = 0.085;
+        this.applyFees();
+        break;
+      case 'Other':
+        // this.item.rate will get set by the input field, as this is sourced by ngModel
+        break;
+      default:
+        break;
+    }
+    this.marketSelected.emit(this.item.marketplace);
+  }
+
+  calculateProfit() {
+    let merchantCommission = 0;
+    if (
+      this.item.marketplace &&
+      this.item.pricePurchased &&
+      this.item.priceSold
+    ) {
+      merchantCommission = this.item.priceSold * this.item.rate;
+      if (this.item.marketplace !== 'Other') {
+        merchantCommission = merchantCommission - 0.3; // Apply fixed Paypal fee
+      }
+      const profit = this.item.priceSold - merchantCommission;
+      this.item.profit = profit - this.item.pricePurchased;
+    }
+  }
+
+  applyFees() {
+    this.item.rate = this.item.rate + 0.029; // Apply base rate Paypal fee
+  }
+
 }

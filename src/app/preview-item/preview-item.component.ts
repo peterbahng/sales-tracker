@@ -8,14 +8,19 @@ import { Item } from '../submit-item/item.model';
 })
 export class PreviewItemComponent implements OnInit {
   @Input() item: Item;
-  rate = 0;
-  profit = 0;
 
-  constructor() { 
+
+  constructor() {
   }
+
+
+
+// if eBay, then first should be Grailed, second should be StockX
+// if Grailed, then first should be eBay, second should be StockX
+// if StockX, then first should be Grailed, second should be eBay
+
 
   ngOnInit() {
   }
-
 
 }

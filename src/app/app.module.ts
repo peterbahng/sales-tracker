@@ -13,6 +13,7 @@ import { ItemsListComponent } from './items-list/items-list.component';
 import { FooterComponent } from './footer/footer.component';
 import { PreviewItemComponent } from './preview-item/preview-item.component';
 import { MatListModule } from '@angular/material/list';
+import { CompareMarketsComponent } from './compare-markets/compare-markets.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MatListModule } from '@angular/material/list';
     SubmitItemComponent,
     ItemsListComponent,
     FooterComponent,
-    PreviewItemComponent
+    PreviewItemComponent,
+    CompareMarketsComponent
   ],
   imports: [
     BrowserModule,

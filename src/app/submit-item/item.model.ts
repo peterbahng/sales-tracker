@@ -12,6 +12,8 @@ export class Item {
     public pricePurchased: number,
     public sold: boolean,
     public marketplace?: string,
-    public priceSold?: number
+    public rate?: number,
+    public priceSold?: number,
+    public profit?: number
   ) {}
 }

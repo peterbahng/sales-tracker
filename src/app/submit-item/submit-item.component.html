@@ -9,25 +9,28 @@
         <input matInput placeholder="Item Name" [(ngModel)]="item.itemName" name="itemName">
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input matInput placeholder="Price Purchased" [(ngModel)]="item.pricePurchased" name="pricePurchased">
+        <input matInput placeholder="Price Purchased" [(ngModel)]="item.pricePurchased" name="pricePurchased" (input)="calculateProfit()">
       </mat-form-field>
       <mat-checkbox [(ngModel)]="item.sold" name="sold">Sold?</mat-checkbox>
 
       <mat-form-field *ngIf="item.sold" class="example-full-width">
         <mat-select placeholder="Marketplace" [(ngModel)]="item.marketplace" name="marketplace">
-          <mat-option *ngFor="let option of item.marketOptions" [value]="option.value">
+          <mat-option *ngFor="let option of item.marketOptions" [value]="option.value" (click)="onMarketOptionSelected(); calculateProfit();">
             {{option.value}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="example-full-width" *ngIf="item.marketplace === 'Other'">
-        <input matInput placeholder="Rate" [(ngModel)]="item.rate" name="rate">
+        <input matInput placeholder="Rate" [(ngModel)]="item.rate" name="rate" (input)="calculateProfit()">
       </mat-form-field>
       <mat-form-field class="example-full-width" *ngIf="item.sold">
-        <input matInput placeholder="Price Sold" [(ngModel)]="item.priceSold" name="priceSold">
+        <input matInput placeholder="Price Sold" [(ngModel)]="item.priceSold" name="priceSold" (input)="calculateProfit()">
       </mat-form-field>
       <button mat-raised-button color="primary" class="d-block" (click)="submitItem(item)">Submit</button>
     </form>
   </div>
-  <app-preview-item [item]="item"></app-preview-item>
+  <div class="col-6">
+    <app-preview-item [item]="item"></app-preview-item>
+  </div>
 </div>
+<!-- <p>{{calculateProfit()}}</p> -->
