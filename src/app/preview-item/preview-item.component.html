@@ -10,7 +10,7 @@
     </mat-list>
   </div>
   <div class="col-8">
-    <app-compare-markets [item]="item">
+    <app-compare-markets *ngIf="item.sold && item.priceSold && item.marketplace && item.pricePurchased" [item]="item">
     </app-compare-markets>
   </div>
 </div>

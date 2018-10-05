@@ -9,7 +9,7 @@ import { ItemService } from '../item.service';
 })
 export class SubmitItemComponent implements OnInit {
   item: Item = new Item('', '', 0, false, '', 1, 0, 0);
-  @Output() marketSelected = new EventEmitter<string>();
+  // @Output() marketSelected = new EventEmitter<string>();
 
   constructor(private itemService: ItemService) {}
 
@@ -44,32 +44,39 @@ export class SubmitItemComponent implements OnInit {
     this.item.pricePurchased = 0;
     this.item.sold = false;
     this.item.marketplace = '';
-    this.item.rate = 1;
+    this.item.rate = 0;
     this.item.priceSold = 0;
     this.item.profit = 0;
   }
 
   onMarketOptionSelected() {
+    this.item.rate = this.getRate();
+    // this.marketSelected.emit(this.item.marketplace);
+  }
+
+  getRate() {
+    let rate;
     switch (this.item.marketplace) {
       case 'eBay':
-        this.item.rate = 0.1;
-        this.applyFees();
+        rate = 0.1;
+        rate = this.applyFees(rate);
         break;
       case 'Grailed':
-        this.item.rate = 0.06;
-        this.applyFees();
+        rate = 0.06;
+        rate = this.applyFees(rate);
         break;
       case 'StockX':
-        this.item.rate = 0.085;
-        this.applyFees();
+        rate = 0.085;
+        rate = this.applyFees(rate);
         break;
       case 'Other':
-        // this.item.rate will get set by the input field, as this is sourced by ngModel
+        rate = 0;
+        // rate will get set by the input field, as this is sourced by ngModel
         break;
       default:
         break;
     }
-    this.marketSelected.emit(this.item.marketplace);
+    return rate;
   }
 
   calculateProfit() {
@@ -88,8 +95,7 @@ export class SubmitItemComponent implements OnInit {
     }
   }
 
-  applyFees() {
-    this.item.rate = this.item.rate + 0.029; // Apply base rate Paypal fee
+  applyFees(rate) {
+    return rate + 0.03; // Apply base rate Paypal fee
   }
-
 }

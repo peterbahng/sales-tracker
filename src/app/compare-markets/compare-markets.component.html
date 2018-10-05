@@ -1,22 +1,24 @@
-<div class="row" *ngIf="item.sold && item.priceSold && item.marketplace && item.pricePurchased">
+<div class="row">
   <div class="col-6">
-    <span>{{item.marketplace === 'StockX' ? 'Grailed' : item.marketplace === 'Grailed' ? 'eBay' : 'Grailed'}}</span>
+    <!-- <span>{{item.marketplace === 'StockX' ? 'Grailed' : item.marketplace === 'Grailed' ? 'eBay' : 'Grailed'}}</span> -->
+    <span>{{marketComparisons[0].marketplace}}</span>
     <mat-list>
       <mat-list-item class="list-group-item">Price Sold: {{item.priceSold | currency:'USD'}}</mat-list-item>
-      <mat-list-item *ngIf="item.marketplace" class="list-group-item">Market (rate): {{item.marketplace}} ({{
-        item.rate | percent:'1.0-4'}})</mat-list-item>
+      <mat-list-item *ngIf="item.marketplace" class="list-group-item">Market (rate): {{marketComparisons[0].marketplace}} ({{
+        marketComparisons[0].rate | percent:'1.0-4'}})</mat-list-item>
       <mat-list-item class="list-group-item">Price Purchased: {{item.pricePurchased | currency:'USD'}}</mat-list-item>
-      <mat-list-item class="list-group-item">Profit: {{item.profit | currency:'USD'}}</mat-list-item>
+      <mat-list-item class="list-group-item">Profit: {{calculateProfit(marketComparisons[0].marketplace) | currency:'USD'}}</mat-list-item>
     </mat-list>
   </div>
   <div class="col-6">
-    <span>{{item.marketplace === 'Grailed' ? 'StockX' : item.marketplace === 'eBay' ? 'StockX' : 'eBay'}}</span>
+    <!-- <span>{{item.marketplace === 'Grailed' ? 'StockX' : item.marketplace === 'eBay' ? 'StockX' : 'eBay'}}</span> -->
+    <span>{{marketComparisons[1].marketplace}}</span>
     <mat-list>
       <mat-list-item class="list-group-item">Price Sold: {{item.priceSold | currency:'USD'}}</mat-list-item>
-      <mat-list-item *ngIf="item.marketplace" class="list-group-item">Market (rate): {{item.marketplace}} ({{
-        item.rate | percent:'1.0-4'}})</mat-list-item>
+      <mat-list-item *ngIf="item.marketplace" class="list-group-item">Market (rate): {{marketComparisons[1].marketplace}} ({{
+        marketComparisons[1].rate | percent:'1.0-4'}})</mat-list-item>
       <mat-list-item class="list-group-item">Price Purchased: {{item.pricePurchased | currency:'USD'}}</mat-list-item>
-      <mat-list-item class="list-group-item">Profit: {{item.profit | currency:'USD'}}</mat-list-item>
+      <mat-list-item class="list-group-item">Profit: {{calculateProfit(marketComparisons[1].marketplace) | currency:'USD'}}</mat-list-item>
     </mat-list>
   </div>
 </div>
